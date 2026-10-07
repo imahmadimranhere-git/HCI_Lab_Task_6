@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Evaluation</title><link rel="stylesheet" href="style.css"></head>
+<body data-title="Evaluation" data-principle="Usability evaluation - heuristic evaluation, SUS questionnaire and fixes based on real user testing."><main id="main" class="wrap">
+<h1>Usability Testing and Final Evaluation</h1>
+<p class="err">NOTE: The answers below are SAMPLE data. Replace them with the real answers of your 5 test users before submitting.</p>
+<h2>SUS Results (5 users)</h2>
+<div class="scroll"><table id="t"><tr><th>User</th><th>Answers to the 10 SUS questions (1-5)</th><th>SUS score</th></tr></table></div>
+<p><b>Average SUS score: <span id="avg"></span></b> (above 68 is above average)</p>
+<div id="chart"></div>
+<h2>Problems found and fixes (before / after)</h2>
+<div class="scroll"><table><tr><th>Problem (heuristic)</th><th>Before</th><th>After</th></tr>
+<tr><td>Users did not know if feedback was sent (Visibility of status)</td><td>No message after Send</td><td>Green success message added</td></tr>
+<tr><td>Small text hard to read (Accessibility)</td><td>Fixed 14px text</td><td>A+ / A- buttons added</td></tr>
+<tr><td>Could not find a page quickly (Recognition)</td><td>No search box</td><td>Search box and breadcrumb added</td></tr></table></div>
+<h2>Heuristic Evaluation Summary</h2>
+<p>Consistency: good. Error prevention: form validation works. Help and documentation: needs a small FAQ (future work).</p>
+<h2>Final Report</h2>
+<p>The website follows HCI principles with a consistent layout, clear feedback, accessible options and tested usability. Testing with 5 users improved status feedback, readability and navigation.</p>
+</main><script src="app.js"></script>
+<script>
+// SAMPLE answers: replace with real data
+var users = [[4,2,4,2,5,1,4,2,4,2],[5,1,4,1,4,2,5,2,5,1],[3,2,4,3,4,2,4,2,4,3],[4,2,5,2,4,1,4,1,5,2],[4,3,4,2,3,2,4,2,4,2]];
+var total = 0, html = "", bars = "";
+users.forEach(function (u, i) {
+  var s = 0;
+  // Odd questions: answer-1, even questions: 5-answer, then multiply by 2.5
+  u.forEach(function (a, q) { s += (q % 2 === 0) ? a - 1 : 5 - a; });
+  s = s * 2.5; total += s;
+  html += "<tr><td>User " + (i + 1) + "</td><td>" + u.join(", ") + "</td><td>" + s + "</td></tr>";
+  bars += '<div class="bar" style="width:' + s + '%">User ' + (i + 1) + ": " + s + "</div>";
+});
+document.getElementById("t").insertAdjacentHTML("beforeend", html);
+document.getElementById("avg").textContent = (total / users.length).toFixed(1);
+document.getElementById("chart").innerHTML = bars;
+</script></body></html>

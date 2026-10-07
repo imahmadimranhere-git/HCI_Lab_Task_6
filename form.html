@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Feedback Form</title><link rel="stylesheet" href="style.css"></head>
+<body data-title="Feedback Form" data-principle="Error prevention and helpful error messages - clear labels, correct input types, validation and a success message."><main id="main" class="wrap" style="max-width:560px">
+<h1>Feedback Form</h1>
+<form id="f" novalidate>
+<label for="n">Full name *</label><input id="n" autocomplete="name"><div class="err" id="en" role="alert"></div>
+<label for="e">Email *</label><input id="e" type="email" autocomplete="email" placeholder="you@example.com"><div class="err" id="ee" role="alert"></div>
+<label for="a">Age</label><input id="a" type="number" min="10" max="100"><div class="err" id="ea" role="alert"></div>
+<label for="r">How do you rate this site? *</label><select id="r"><option value="">Choose...</option><option>5 - Excellent</option><option>4 - Good</option><option>3 - Okay</option><option>2 - Poor</option><option>1 - Bad</option></select><div class="err" id="er" role="alert"></div>
+<label for="m">Comments (min 10 characters) *</label><textarea id="m" rows="4"></textarea><div class="err" id="em" role="alert"></div>
+<button type="submit">Send feedback</button>
+</form>
+<p id="done" class="ok" role="status"></p>
+</main><script src="app.js"></script>
+<script>
+function v(id) { return document.getElementById(id).value.trim(); }
+function setErr(id, msg) { document.getElementById("e" + id).textContent = msg; return msg === ""; }
+document.getElementById("f").onsubmit = function (ev) {
+  ev.preventDefault();
+  var a = v("a");
+  var ok = [
+    setErr("n", v("n").length < 3 ? "Please enter your full name (at least 3 letters)." : ""),
+    setErr("e", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("e")) ? "" : "Enter a valid email like you@example.com."),
+    setErr("a", a && (a < 10 || a > 100) ? "Age must be between 10 and 100." : ""),
+    setErr("r", v("r") === "" ? "Please choose a rating." : ""),
+    setErr("m", v("m").length < 10 ? "Please write at least 10 characters." : "")
+  ].every(Boolean);
+  var d = document.getElementById("done");
+  if (ok) { d.textContent = "✔ Thank you, " + v("n") + "! Your feedback was sent."; this.reset(); }
+  else d.textContent = "";
+};
+</script></body></html>

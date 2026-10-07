@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Prototype</title><link rel="stylesheet" href="style.css"></head>
+<body data-title="Prototype" data-principle="Feedback and visibility of system status - hover effects, loading indicator, tooltips, modal and button states."><main id="main" class="wrap" style="max-width:600px">
+<h1>Interaction, Feedback and Prototype</h1>
+<p>Main user flow: <b>Choose topic → Add details → Confirm</b>. (This clickable flow is the prototype. You can also add your Figma link here.)</p>
+<div class="card">
+<p id="step"><b>Step 1 of 3:</b> Choose a topic</p>
+<div id="s1"><button class="opt">Principles</button> <button class="opt">Usability</button> <button class="opt">Accessibility</button></div>
+<div id="s2" style="display:none"><label for="nt">Your note <span class="tip" tabindex="0" data-tip="Write why you chose this topic">(?)</span></label><input id="nt"></div>
+<div id="s3" style="display:none"><p>Topic: <b id="tp"></b></p><p>Note: <span id="nn"></span></p></div>
+<p style="margin-top:14px"><button id="back" disabled>Back</button> <button id="next" disabled>Next</button> <span id="ld" style="display:none"><span class="spin"></span> Saving...</span></p>
+</div>
+<div class="modal" id="m" role="dialog" aria-modal="true"><div class="card"><h3>✔ Done!</h3><p>Your choice has been saved.</p><button id="x">Close</button></div></div>
+</main><script src="app.js"></script>
+<script>
+var step = 1, topic = "";
+var next = document.getElementById("next"), back = document.getElementById("back");
+function render() {
+  for (var i = 1; i <= 3; i++) document.getElementById("s" + i).style.display = i === step ? "block" : "none";
+  document.getElementById("step").innerHTML = "<b>Step " + step + " of 3:</b> " + ["Choose a topic", "Add details", "Confirm"][step - 1];
+  back.disabled = step === 1;
+  next.disabled = step === 1 && topic === "";
+  next.textContent = step === 3 ? "Confirm" : "Next";
+}
+document.querySelectorAll(".opt").forEach(function (b) {
+  b.onclick = function () {
+    topic = b.textContent;
+    document.querySelectorAll(".opt").forEach(function (o) { o.style.outline = ""; });
+    b.style.outline = "4px solid #ff9800";
+    render();
+  };
+});
+next.onclick = function () {
+  if (step < 3) {
+    step++;
+    if (step === 3) { document.getElementById("tp").textContent = topic; document.getElementById("nn").textContent = document.getElementById("nt").value || "(none)"; }
+    render();
+  } else {
+    // Show loading indicator, then success modal
+    document.getElementById("ld").style.display = "inline";
+    next.disabled = true;
+    setTimeout(function () { document.getElementById("ld").style.display = "none"; document.getElementById("m").classList.add("show"); }, 1500);
+  }
+};
+back.onclick = function () { step--; render(); };
+document.getElementById("x").onclick = function () { document.getElementById("m").classList.remove("show"); step = 1; topic = ""; render(); };
+render();
+</script></body></html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Good vs Bad Design</title><link rel="stylesheet" href="style.css"></head>
+<body data-title="Good vs Bad Design" data-principle="Contrast, feedback and error prevention - the same login page designed badly and then fixed."><main id="main" class="wrap">
+<h1>Good Design vs Bad Design</h1>
+<p>Switch between the two versions of the same login page.</p>
+<button id="sg" aria-pressed="true">✅ Good version</button> <button id="sb" aria-pressed="false">❌ Bad version</button>
+<div class="grid" style="margin-top:15px">
+<div class="card" id="good"><h3>Login (good)</h3>
+ <label for="u">Email address</label><input id="u" type="email" placeholder="you@example.com">
+ <label for="p">Password</label><input id="p" type="password" placeholder="At least 8 characters">
+ <p class="err" id="ge"></p><button id="gl">Log in</button> <a href="#">Forgot password?</a></div>
+<div class="card badbox" id="bad" style="display:none"><b>LOGIN!!!</b><br>enter thing <input><br>enter other thing <input><br><button class="x">ok</button><button class="x">ok</button><br>click here click here free prize free prize</div>
+<div class="card"><h3>Annotations</h3><table><tr><th>Problem</th><th>Fix (principle)</th></tr>
+<tr><td>Pink/yellow text, poor contrast</td><td>Dark text on light background (readability)</td></tr>
+<tr><td>Tiny 8px text and buttons</td><td>16px text, big buttons (ease of use)</td></tr>
+<tr><td>"enter thing" labels</td><td>Clear labels: Email, Password (visibility)</td></tr>
+<tr><td>Two identical "ok" buttons</td><td>One clear "Log in" button (consistency)</td></tr>
+<tr><td>No feedback on errors</td><td>Red helpful message (feedback)</td></tr>
+<tr><td>Clutter and ads</td><td>Minimal design (aesthetic design)</td></tr></table></div></div>
+</main><script src="app.js"></script>
+<script>
+function show(good) {
+  document.getElementById("good").style.display = good ? "block" : "none";
+  document.getElementById("bad").style.display = good ? "none" : "block";
+  document.getElementById("sg").setAttribute("aria-pressed", good);
+  document.getElementById("sb").setAttribute("aria-pressed", !good);
+}
+document.getElementById("sg").onclick = function () { show(true); };
+document.getElementById("sb").onclick = function () { show(false); };
+document.getElementById("gl").onclick = function () {
+  var u = document.getElementById("u").value, p = document.getElementById("p").value, e = document.getElementById("ge");
+  if (u.indexOf("@") < 1) e.textContent = "Please enter a valid email, e.g. you@example.com";
+  else if (p.length < 8) e.textContent = "Password must be at least 8 characters.";
+  else { e.innerHTML = '<span class="ok">Login successful!</span>'; }
+};
+</script></body></html>

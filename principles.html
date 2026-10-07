@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Principles</title><link rel="stylesheet" href="style.css"></head>
+<body data-title="Principles" data-principle="Help and documentation - every principle has a short real-life example."><main id="main" class="wrap">
+<h1>Characteristics of Good Interface Design</h1>
+<div id="c" class="grid"></div>
+<h2>Nielsen's 10 Heuristics</h2><div class="scroll"><table id="h"><tr><th>#</th><th>Heuristic</th><th>Example</th></tr></table></div>
+<h2>Shneiderman's 8 Golden Rules</h2><div class="scroll"><table id="g"><tr><th>#</th><th>Rule</th><th>Example</th></tr></table></div>
+</main><script src="app.js"></script>
+<script>
+var chars = [["Learnability","A new user can start without help (e.g. a clear 'Sign up' button)."],["Efficiency","Experts finish tasks fast (keyboard shortcuts)."],["Memorability","Users remember how it works after a break (familiar icons)."],["Error prevention","Disable Submit until the form is valid."],["Satisfaction","Pleasant colours and smooth feel."],["Consistency","Same button style on every page."],["Feedback","'Message sent' after clicking Send."],["Visibility","Menu items are visible, not hidden."]];
+document.getElementById("c").innerHTML = chars.map(function (x) { return '<div class="card"><h3>' + x[0] + '</h3><p>' + x[1] + '</p></div>'; }).join("");
+function fill(id, rows) { document.getElementById(id).insertAdjacentHTML("beforeend", rows.map(function (r, i) { return '<tr><td>' + (i + 1) + '</td><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join("")); }
+fill("h", [["Visibility of system status","Progress bar while a file uploads."],["Match with the real world","Trash-can icon for delete."],["User control and freedom","Undo button after deleting."],["Consistency and standards","Cart icon always means shopping cart."],["Error prevention","'Are you sure?' before deleting."],["Recognition rather than recall","Recent searches shown in the search box."],["Flexibility and efficiency","Ctrl+C / Ctrl+V shortcuts."],["Aesthetic and minimalist design","Google search page: only what is needed."],["Help users recover from errors","'Password needs 8 characters' instead of 'Error 52'."],["Help and documentation","FAQ and help button."]]);
+fill("g", [["Strive for consistency","Same menu layout on all screens."],["Enable shortcuts for frequent users","Double-tap to like a photo."],["Offer informative feedback","Button changes colour when clicked."],["Design dialogs to yield closure","'Order placed' confirmation screen."],["Prevent errors","Date picker instead of typing a date."],["Permit easy reversal of actions","Restore from recycle bin."],["Keep users in control","User can cancel a download."],["Reduce short-term memory load","Show steps 1 of 3 in a form."]]);
+</script></body></html>
